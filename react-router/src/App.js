@@ -1,26 +1,47 @@
 import React, { Fragment } from "react"
 import "./index.css"
 
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Switch,
+    Redirect,
+} from "react-router-dom"
 
 export default function App() {
+    const name = "Crystal Martin"
+    const isAuthenticated = false
     return (
         <Router>
             <main>
                 <nav>
                     <ul>
                         <li>
-                            <a href='/'>Home</a>
+                            <Link to='/'>Home</Link>
                         </li>
                         <li>
-                            <a href='/about'>About</a>
+                            <Link to={`/about/${name}`}>About</Link>
                         </li>
                         <li>
-                            <a href='/contact'>Contact</a>
+                            <Link to='/contact'>Contact</Link>
                         </li>
                     </ul>
                 </nav>
-                <Route path='/' component={Home} />
+                <Switch>
+                    <Route path='/' exact component={Home} />
+                    {isAuthenticated ? (
+                        <>
+                            <Route path='/about/:name' component={About} />
+                            <Route path='/contact' component={Contact} />
+                            <Route
+                                render={() => <h1>404: page not found</h1>}
+                            />
+                        </>
+                    ) : (
+                        <Redirect to='/' />
+                    )}
+                </Switch>
             </main>
         </Router>
     )
@@ -33,16 +54,23 @@ const Home = () => (
     </Fragment>
 )
 // About Page
-const About = () => (
+const About = ({
+    match: {
+        params: { name },
+    },
+}) => (
     <Fragment>
-        <h1>About</h1>
+        {name !== "Crystal Martin" ? <Redirect to='/' /> : null}
+        <h1>About {name}</h1>
         <FakeText />
     </Fragment>
 )
+
 // Contact Page
-const Contact = () => (
+const Contact = ({ history }) => (
     <Fragment>
         <h1>Contact</h1>
+        <button onClick={() => history.push("./")}>Go to home</button>
         <FakeText />
     </Fragment>
 )
