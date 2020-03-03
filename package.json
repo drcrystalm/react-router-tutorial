@@ -1,0 +1,9 @@
+{
+  "name": "my-awesome-package",
+  "version": "1.0",
+  "description": "The best package you will ever find!",
+  "main": "index.js",
+  "repository": "https://github.com/drcrystalm/react-router-tutorial.git",
+  "author": "Crystal Martin",
+  "license": "MIT"
+}
