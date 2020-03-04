@@ -7,6 +7,7 @@ import {
     Link,
     Switch,
     Redirect,
+    useHistory,
 } from "react-router-dom"
 
 export default function App() {
@@ -67,13 +68,15 @@ const About = ({
 )
 
 // Contact Page
-const Contact = ({ history }) => (
-    <Fragment>
-        <h1>Contact</h1>
-        <button onClick={() => history.push("./")}>Go to home</button>
-        <FakeText />
-    </Fragment>
-)
+const Contact = () => {
+    const history = useHistory()
+    return (
+        <Fragment>
+            <h1>Contact</h1>
+            <button onClick={() => history.push("/")}>Go to home</button>
+        </Fragment>
+    )
+}
 
 const FakeText = () => (
     <p>
